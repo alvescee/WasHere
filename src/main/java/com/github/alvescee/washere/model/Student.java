@@ -24,7 +24,7 @@ public class Student implements Serializable {
 
     private String name;
 
-    private int chip;
+    private long chip;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private List<Presence> presences;
@@ -43,7 +43,7 @@ public class Student implements Serializable {
         return name;
     }
 
-    public int getChip() {
+    public long getChip() {
         return chip;
     }
 
@@ -57,33 +57,33 @@ public class Student implements Serializable {
         this.name = name;
     }
 
-    public void setChip(int chip) {
+    public void setChip(long chip) {
         this.chip = chip;
     }
-
+    
     /** Equals compare if the Student has the same id of the chip
     */
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + chip;
-        return result;
+        int hash = 7;
+        hash = 97 * hash + (int) (this.chip ^ (this.chip >>> 32));
+        return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        Student other = (Student) obj;
-        if (chip != other.chip)
-            return false;
-        return true;
+        }
+        final Student other = (Student) obj;
+        return this.chip == other.chip;
     }
 
 }
