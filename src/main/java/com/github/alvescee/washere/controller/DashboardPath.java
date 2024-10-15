@@ -3,9 +3,9 @@ package com.github.alvescee.washere.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.github.alvescee.washere.model.Lesson;
 import com.github.alvescee.washere.model.ShowPresences;
@@ -19,7 +19,9 @@ public class DashboardPath {
     private LessonRelation lessonRelation;
 
     @GetMapping
-    public ResponseEntity<List<ShowPresences>> all() {
+    public ModelAndView all() {
+
+        final ModelAndView view = new ModelAndView("dashboard.html");
 
         List<ShowPresences> show = lessonRelation.findAll().stream().map(lesson -> {
             return new ShowPresences(
@@ -29,7 +31,9 @@ public class DashboardPath {
             );
         }).toList();
 
-        return ResponseEntity.ok().body(show);
+        view.addObject("lessons", show);
+
+        return view;
     }
 
     private List<SimplePresence> extractListPresence(Lesson lesson) {

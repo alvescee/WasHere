@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WasHere - dashboard</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" />
+
+</head>
+<body>
+
+    <section th:each="lesson : ${lessons}">
+
+        <h1 th:text="${lesson.day} + '/' + ${lesson.month}"></h1>
+
+        <article th:each="presence : ${lesson.presences}">
+
+            <p th:text="${presence.student}"></p>
+            
+            <figure>
+                <label>
+                    <input th:checked="${presence.present}" disabled type="checkbox">
+                    <span class="custom"></span>
+                </label>                
+            </figure>
+
+        </article>
+
+    </section>
+
+</body>
+</html>
